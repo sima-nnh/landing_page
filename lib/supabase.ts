@@ -9,9 +9,17 @@ const log = (level: 'info' | 'error', message: string) => {
   console.log(`${timestamp} [${level}] ${message}`);
 };
 
-log('info', 'Handling CreateClient action');
-log('info', `Connecting to Supabase at ${supabaseUrl}`);
+// Initialize Supabase client only once
+let supabaseInstance: ReturnType<typeof createClient> | null = null;
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+function getSupabaseClient() {
+  if (!supabaseInstance) {
+    log('info', 'Handling CreateClient action');
+    log('info', `Connecting to Supabase at ${supabaseUrl}`);
+    supabaseInstance = createClient(supabaseUrl, supabaseAnonKey);
+    log('info', 'Supabase client created successfully');
+  }
+  return supabaseInstance;
+}
 
-log('info', 'Supabase client created successfully');
+export const supabase = getSupabaseClient();

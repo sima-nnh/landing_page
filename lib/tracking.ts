@@ -8,6 +8,46 @@ const SESSION_KEY = 'scopedocs_session_id';
 const ANONYMOUS_KEY = 'scopedocs_anonymous_id';
 const LANDING_URL_KEY = 'scopedocs_landing_url';
 
+// Flag to prevent infinite recursion during initialization
+let isInitializing = false;
+
+/**
+ * Create a minimal default tracking context
+ * Used to prevent recursion and as fallback
+ */
+const createDefaultContext = (): TrackingContext => {
+  return {
+    utm_source: null,
+    utm_medium: null,
+    utm_campaign: null,
+    utm_term: null,
+    utm_content: null,
+    landing_url: null,
+    page_path: null,
+    referrer_url: null,
+    timezone: null,
+    device_type: 'desktop',
+    os: null,
+    browser: null,
+    user_agent: null,
+    session_id: getSessionId(),
+    anonymous_id: getAnonymousId(),
+    cta_clicked: false,
+    cta_click_count: 0,
+    first_cta_at: null,
+    last_cta_at: null,
+    signup_step: 'viewed_landing',
+    signup_completed: false,
+    signup_completed_at: null,
+    last_seen_at: new Date().toISOString(),
+    events_count: 0,
+    country: null,
+    region: null,
+    city: null,
+    ip_hash: null,
+  };
+};
+
 interface TrackingContext {
   // UTM parameters
   utm_source: string | null;
@@ -190,7 +230,21 @@ const saveTrackingContext = (context: Partial<TrackingContext>) => {
   if (typeof localStorage === 'undefined') return;
   
   try {
-    const existing = getTrackingContext();
+    // Get existing context without triggering init (to prevent recursion)
+    let existing: TrackingContext;
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        existing = JSON.parse(stored) as TrackingContext;
+      } else {
+        // If no stored context, create minimal default to avoid recursion
+        existing = createDefaultContext();
+      }
+    } catch (parseError) {
+      // If parsing fails, create minimal default
+      existing = createDefaultContext();
+    }
+    
     const updated = { ...existing, ...context };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
   } catch (error) {
@@ -203,64 +257,86 @@ const saveTrackingContext = (context: Partial<TrackingContext>) => {
  * Should be called once when the page/component mounts
  */
 export const initTrackingContext = (): TrackingContext => {
-  const now = new Date().toISOString();
-  
-  // Check if we already have tracking context
-  const existing = getTrackingContext();
-  if (existing && existing.landing_url) {
-    // Update last_seen_at but keep existing context
-    existing.last_seen_at = now;
-    saveTrackingContext({ last_seen_at: now });
-    return existing;
+  // Prevent recursive calls
+  if (isInitializing) {
+    // Return minimal default if already initializing
+    return createDefaultContext();
   }
   
-  // Initialize new tracking context
-  const utmParams = getUTMParams();
-  const deviceInfo = parseUserAgent();
-  const landingUrl = getLandingUrl();
+  isInitializing = true;
+  const now = new Date().toISOString();
   
-  const context: TrackingContext = {
-    // UTM parameters
-    utm_source: utmParams.utm_source || null,
-    utm_medium: utmParams.utm_medium || null,
-    utm_campaign: utmParams.utm_campaign || null,
-    utm_term: utmParams.utm_term || null,
-    utm_content: utmParams.utm_content || null,
+  try {
+    // Check if we already have tracking context (directly from localStorage to avoid recursion)
+    let existing: TrackingContext | null = null;
+    if (typeof localStorage !== 'undefined') {
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+          existing = JSON.parse(stored) as TrackingContext;
+        }
+      } catch (parseError) {
+        // Ignore parse errors, will create new context
+      }
+    }
     
-    // Page context
-    landing_url: landingUrl,
-    page_path: typeof window !== 'undefined' ? window.location.pathname : null,
-    referrer_url: typeof document !== 'undefined' ? (document.referrer || null) : null,
-    timezone: getTimezone(),
+    if (existing && existing.landing_url) {
+      // Update last_seen_at but keep existing context
+      existing.last_seen_at = now;
+      saveTrackingContext({ last_seen_at: now });
+      return existing;
+    }
     
-    // Device & environment
-    ...deviceInfo,
+    // Initialize new tracking context
+    const utmParams = getUTMParams();
+    const deviceInfo = parseUserAgent();
+    const landingUrl = getLandingUrl();
     
-    // Session & identity
-    session_id: getSessionId(),
-    anonymous_id: getAnonymousId(),
+    const context: TrackingContext = {
+      // UTM parameters
+      utm_source: utmParams.utm_source || null,
+      utm_medium: utmParams.utm_medium || null,
+      utm_campaign: utmParams.utm_campaign || null,
+      utm_term: utmParams.utm_term || null,
+      utm_content: utmParams.utm_content || null,
+      
+      // Page context
+      landing_url: landingUrl,
+      page_path: typeof window !== 'undefined' ? window.location.pathname : null,
+      referrer_url: typeof document !== 'undefined' ? (document.referrer || null) : null,
+      timezone: getTimezone(),
+      
+      // Device & environment
+      ...deviceInfo,
+      
+      // Session & identity
+      session_id: getSessionId(),
+      anonymous_id: getAnonymousId(),
+      
+      // Interaction & funnel state
+      cta_clicked: false,
+      cta_click_count: 0,
+      first_cta_at: null,
+      last_cta_at: null,
+      signup_step: 'viewed_landing',
+      signup_completed: false,
+      signup_completed_at: null,
+      last_seen_at: now,
+      events_count: 0,
+      
+      // Location (requires server-side enrichment or trusted geo endpoint)
+      // TODO: requires server-side enrichment or trusted geo endpoint
+      country: null,
+      region: null,
+      city: null,
+      ip_hash: null, // Never store raw IP in client code
+    };
     
-    // Interaction & funnel state
-    cta_clicked: false,
-    cta_click_count: 0,
-    first_cta_at: null,
-    last_cta_at: null,
-    signup_step: 'viewed_landing',
-    signup_completed: false,
-    signup_completed_at: null,
-    last_seen_at: now,
-    events_count: 0,
-    
-    // Location (requires server-side enrichment or trusted geo endpoint)
-    // TODO: requires server-side enrichment or trusted geo endpoint
-    country: null,
-    region: null,
-    city: null,
-    ip_hash: null, // Never store raw IP in client code
-  };
-  
-  saveTrackingContext(context);
-  return context;
+    saveTrackingContext(context);
+    return context;
+  } finally {
+    isInitializing = false;
+  }
 };
 
 /**
@@ -359,36 +435,7 @@ export const markSignupCompleted = (): void => {
 export const getTrackingContext = (): TrackingContext => {
   if (typeof localStorage === 'undefined') {
     // Return default context if localStorage not available
-    return {
-      utm_source: null,
-      utm_medium: null,
-      utm_campaign: null,
-      utm_term: null,
-      utm_content: null,
-      landing_url: null,
-      page_path: null,
-      referrer_url: null,
-      timezone: null,
-      device_type: 'desktop',
-      os: null,
-      browser: null,
-      user_agent: null,
-      session_id: getSessionId(),
-      anonymous_id: getAnonymousId(),
-      cta_clicked: false,
-      cta_click_count: 0,
-      first_cta_at: null,
-      last_cta_at: null,
-      signup_step: 'viewed_landing',
-      signup_completed: false,
-      signup_completed_at: null,
-      last_seen_at: new Date().toISOString(),
-      events_count: 0,
-      country: null,
-      region: null,
-      city: null,
-      ip_hash: null,
-    };
+    return createDefaultContext();
   }
   
   try {
@@ -400,6 +447,12 @@ export const getTrackingContext = (): TrackingContext => {
     console.warn('Failed to load tracking context:', error);
   }
   
-  // If no stored context, initialize it
-  return initTrackingContext();
+  // If no stored context and not already initializing, initialize it
+  // Otherwise return minimal default to prevent recursion
+  if (!isInitializing) {
+    return initTrackingContext();
+  } else {
+    // Return minimal default if already initializing to prevent recursion
+    return createDefaultContext();
+  }
 };

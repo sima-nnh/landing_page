@@ -17,10 +17,39 @@ interface EmailSignupProps {
   buttonText?: string;
 }
 
+interface EmailSignupRecord {
+  id?: number;
+  emails: string;
+  created_at?: string;
+  [key: string]: any; // Allow additional tracking fields
+}
+
 // Helper function for timestamped logging
 const log = (level: 'info' | 'error', message: string) => {
   const timestamp = new Date().toISOString().replace('T', ' ').substring(0, 23);
   console.log(`${timestamp} [${level}] ${message}`);
+};
+
+// Helper function to get timezone abbreviation (EST, MT, CT, etc.)
+const getTimezoneAbbreviation = (): string => {
+  try {
+    const date = new Date();
+    const timeZoneName = Intl.DateTimeFormat('en', {
+      timeZoneName: 'short',
+      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    }).formatToParts(date).find(part => part.type === 'timeZoneName')?.value;
+    
+    // Return the abbreviation (e.g., EST, EDT, PST, etc.)
+    return timeZoneName || 'UTC';
+  } catch (err) {
+    // Fallback: calculate from offset
+    const offset = -new Date().getTimezoneOffset() / 60;
+    if (offset === -5) return 'EST';
+    if (offset === -6) return 'CST';
+    if (offset === -7) return 'MST';
+    if (offset === -8) return 'PST';
+    return `UTC${offset >= 0 ? '+' : ''}${offset}`;
+  }
 };
 
 export default function EmailSignup({
@@ -88,25 +117,41 @@ export default function EmailSignup({
       }
       log('info', 'Supabase client is initialized');
 
-      const emailToSave = email.trim();
+      const emailToSave = email.trim().toLowerCase(); // Normalize to lowercase for case-insensitive check
       log('info', `📧 Checking if email exists: ${emailToSave}`);
       
-      // First, check if email already exists (best effort - continue if check fails)
+      // First, check if email already exists (case-insensitive check)
+      // Use ilike for case-insensitive matching in PostgreSQL/Supabase
       let emailExists = false;
       try {
-        const { data: existingData, error: checkError } = await supabase
+        // Try case-insensitive check first (ilike)
+        const { data: ilikeData, error: ilikeError } = await supabase
           .from('email_signups')
           .select('emails')
-          .eq('emails', emailToSave)
+          .ilike('emails', emailToSave)
           .limit(1);
 
-        if (checkError) {
-          log('error', `Error checking existing email (will proceed with insert): ${checkError.message}`);
-          // If check fails, assume email is new and proceed with insert
-          emailExists = false;
+        if (!ilikeError && ilikeData && ilikeData.length > 0) {
+          emailExists = true;
+          log('info', '📧 Email already exists in database (case-insensitive check via ilike)');
+        } else if (ilikeError) {
+          // If ilike fails, try regular eq() as fallback (case-sensitive)
+          log('error', `ilike check failed, trying case-sensitive check: ${ilikeError.message}`);
+          const { data: existingData, error: checkError } = await supabase
+            .from('email_signups')
+            .select('emails')
+            .eq('emails', emailToSave)
+            .limit(1);
+
+          if (checkError) {
+            log('error', `Error checking existing email (will proceed with insert): ${checkError.message}`);
+            emailExists = false;
+          } else {
+            emailExists = existingData !== null && existingData !== undefined && existingData.length > 0;
+            log('info', emailExists ? '📧 Email already exists in database (case-sensitive check)' : '📧 Email is new');
+          }
         } else {
-          emailExists = existingData !== null && existingData !== undefined && existingData.length > 0;
-          log('info', emailExists ? '📧 Email already exists in database' : '📧 Email is new');
+          log('info', '📧 Email is new (not found in database)');
         }
       } catch (checkErr) {
         log('error', `Exception during email check (will proceed with insert): ${checkErr}`);
@@ -139,6 +184,9 @@ export default function EmailSignup({
       const offsetSign = timezoneOffset >= 0 ? '+' : '-';
       const offsetString = `${offsetSign}${String(offsetHours).padStart(2, '0')}:${String(offsetMinutes).padStart(2, '0')}`;
       
+      // Get timezone abbreviation (EST, MT, CT, etc.)
+      const timezoneAbbreviation = getTimezoneAbbreviation();
+      
       // Format as ISO string with timezone offset
       const year = now.getFullYear();
       const month = String(now.getMonth() + 1).padStart(2, '0');
@@ -149,6 +197,7 @@ export default function EmailSignup({
       const localTimestamp = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}${offsetString}`;
       
       log('info', `Local timestamp with timezone: ${localTimestamp}`);
+      log('info', `Timezone abbreviation: ${timezoneAbbreviation}`);
       
       // Get tracking context for insert
       const trackingContext = getTrackingContext();
@@ -156,8 +205,9 @@ export default function EmailSignup({
       
       // Build insert payload with all tracking data
       const insertPayload: any = {
-        emails: emailToSave,
+        emails: emailToSave, // Store in lowercase for consistency
         created_at: localTimestamp,
+        timezone_abbr: timezoneAbbreviation, // Add timezone abbreviation (EST, MT, CT, etc.)
         ...trackingContext,
         signup_completed: false, // Will be set to true on success
         signup_completed_at: null, // Will be set on success
@@ -166,10 +216,13 @@ export default function EmailSignup({
       log('info', `📤 Attempting insert with ${Object.keys(insertPayload).length} fields`);
       log('info', `Payload includes: email, created_at, and ${Object.keys(trackingContext).length} tracking fields`);
       
-      let { data, error } = await supabase
+      const result = await (supabase
         .from('email_signups')
-        .insert([insertPayload])
-        .select();
+        .insert([insertPayload] as any)
+        .select() as any);
+      
+      let data: EmailSignupRecord[] | null = result.data as EmailSignupRecord[] | null;
+      let error = result.error;
 
       // If insert fails with tracking data, try with just basic fields
       if (error && (error.code === 'PGRST204' || error.message?.includes('column'))) {
@@ -179,14 +232,15 @@ export default function EmailSignup({
         const basicPayload = {
           emails: emailToSave,
           created_at: localTimestamp,
+          timezone_abbr: timezoneAbbreviation,
         };
         
-        const retryResult = await supabase
+        const retryResult = await (supabase
           .from('email_signups')
-          .insert([basicPayload])
-          .select();
+          .insert([basicPayload] as any)
+          .select() as any);
         
-        data = retryResult.data;
+        data = retryResult.data as EmailSignupRecord[] | null;
         error = retryResult.error;
         
         if (!error) {
