@@ -1061,7 +1061,11 @@ export const Design = () => {
                         aria-controls={`faq-answer-mobile-${index}`}
                       >
                         <span className="faq-question-text">
-                          {index === 4 ? (
+                          {index === 2 ? (
+                            <>
+                              How do you keep docs accurate and up to <br />date?
+                            </>
+                          ) : index === 4 ? (
                             <>
                               Do you train AI models on our company <br />data?
                             </>

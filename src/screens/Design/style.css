@@ -3992,17 +3992,17 @@
 @media (max-width: 1023px) {
   /* Set mobile layout height and min-height */
   .design {
-    height: 8200px !important;
+    height: 8100px !important;
     min-height: 0 !important;
   }
 
   .design .container {
-    height: 8200px !important;
+    height: 8100px !important;
     min-height: 0 !important;
   }
 
   .design .container-2 {
-    height: 8200px !important;
+    height: 8100px !important;
     min-height: 0 !important;
     padding-bottom: 24px !important;
   }
@@ -4019,6 +4019,8 @@
   .design .footer-3 {
     padding: 40px clamp(20px, 5vw, 40px) 24px !important;
     width: 100% !important;
+    max-width: 360px !important;
+    margin: 0 auto !important;
     margin-bottom: 0 !important;
   }
 
@@ -4042,7 +4044,7 @@
   /* frame-16 ends around 5331px, so place testimonials at 5450px with spacing */
   .design .frame-9 {
     top: 5450px !important;
-    left: -9px !important;
+    left: -20px !important;
   }
 
   /* Shift "Works with the tools" section to the right on mobile */
