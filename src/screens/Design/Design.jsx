@@ -373,15 +373,11 @@ export const Design = () => {
                   <div className="frame">
                     <div className="content-7">
                       <button className="button-3">
-                        <div className="group-3">
-                          <div className="frame-2" />
-
-                          <div className="frame-3" />
-
-                          <div className="frame-4" />
-
-                          <div className="frame-5" />
-                        </div>
+                        <img 
+                          className="character-capital-logo" 
+                          alt="Character Capital" 
+                          src="/img/character_capital_logo.png" 
+                        />
 
                         <div className="text-10">
                           Backed by Character Capital
@@ -1513,15 +1509,11 @@ export const Design = () => {
                 <div className="content-27">
                   <div className="content-28">
                     <button className="button-3">
-                      <div className="group-3">
-                        <div className="frame-2" />
-
-                        <div className="frame-3" />
-
-                        <div className="frame-4" />
-
-                        <div className="frame-5" />
-                      </div>
+                      <img 
+                        className="character-capital-logo" 
+                        alt="Character Capital" 
+                        src="/img/character_capital_logo.png" 
+                      />
 
                       <div className="text-10">Backed by Character Capital</div>
                     </button>
@@ -1823,15 +1815,11 @@ export const Design = () => {
                 <div className="content-32">
                   <div className="content-33">
                     <button className="button-3">
-                      <div className="group-3">
-                        <div className="frame-2" />
-
-                        <div className="frame-3" />
-
-                        <div className="frame-4" />
-
-                        <div className="frame-5" />
-                      </div>
+                      <img 
+                        className="character-capital-logo" 
+                        alt="Character Capital" 
+                        src="/img/character_capital_logo.png" 
+                      />
 
                       <div className="text-10">Backed by Character Capital</div>
                     </button>

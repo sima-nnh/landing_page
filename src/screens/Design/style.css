@@ -103,6 +103,17 @@
   width: 17.49px;
 }
 
+.design .character-capital-logo {
+  height: 16px;
+  width: 16px;
+  margin-bottom: -4.00px;
+  margin-top: -4.00px;
+  position: relative;
+  object-fit: contain;
+  flex-shrink: 0;
+  display: block;
+}
+
 .design .frame-2 {
   background-color: #00000033;
   border: 0.5px solid;
