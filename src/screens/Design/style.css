@@ -95,13 +95,7 @@
   position: relative;
 }
 
-.design .group-3 {
-  height: 16px;
-  margin-bottom: -4.00px;
-  margin-top: -4.00px;
-  position: relative;
-  width: 17.49px;
-}
+/* Removed unused square icon styles (group-3, frame-2, frame-3, frame-4, frame-5) - replaced with Character Capital logo */
 
 .design .character-capital-logo {
   height: 16px;
@@ -112,62 +106,6 @@
   object-fit: contain;
   flex-shrink: 0;
   display: block;
-}
-
-.design .frame-2 {
-  background-color: #00000033;
-  border: 0.5px solid;
-  border-color: #ffffff;
-  border-radius: 1px;
-  box-shadow: 0px 3.65px 40.2px #0000001a;
-  height: 11px;
-  left: 8px;
-  position: absolute;
-  top: 4px;
-  transform: rotate(-21.00deg);
-  width: 11px;
-}
-
-.design .frame-3 {
-  background-color: #00000033;
-  border: 0.5px solid;
-  border-color: #ffffff;
-  border-radius: 1px;
-  box-shadow: 0px 0px 80px #13141440;
-  height: 11px;
-  left: 6px;
-  position: absolute;
-  top: 3px;
-  transform: rotate(-21.00deg);
-  width: 11px;
-}
-
-.design .frame-4 {
-  background-color: #00000033;
-  border: 0.5px solid;
-  border-color: #ffffff;
-  border-radius: 1px;
-  box-shadow: 0px 3.65px 40.2px #0000001a;
-  height: 11px;
-  left: 2px;
-  position: absolute;
-  top: 2px;
-  transform: rotate(-21.00deg);
-  width: 11px;
-}
-
-.design .frame-5 {
-  background-color: #00000033;
-  border: 0.5px solid;
-  border-color: #ffffff;
-  border-radius: 1px;
-  box-shadow: 0px 3.65px 40.2px #0000001a;
-  height: 11px;
-  left: -1px;
-  position: absolute;
-  top: 1px;
-  transform: rotate(-21.00deg);
-  width: 11px;
 }
 
 .design .text-10 {
