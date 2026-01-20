@@ -1,7 +1,7 @@
 {
   "name": "scopedocs-project",
   "version": "1.0.0",
-  "description": "ScopeDocs lets the system explain itself, with humans approving the narrative",
+  "description": "Your system writes the docs, humans approve what’s true.",
   "source": "./index.html",
   "type": "module",
   "scripts": {
