@@ -349,9 +349,9 @@ export const Design = () => {
                       </button>
 
                       <div className="text-11">
-                        Know your code,
+                        Stop Writing Docs
                         <br />
-                        within minutes
+                        Start Automating Them
                       </div>
 
                       <p className="text-12">
@@ -1054,9 +1054,9 @@ export const Design = () => {
 
                     <div className="content-29">
                       <div className="text-35">
-                        Know your code,
+                        Stop Writing Docs
                         <br />
-                        within minutes
+                        Start Automating Them
                       </div>
 
                       <p className="text-36">
@@ -1385,9 +1385,9 @@ export const Design = () => {
 
                     <div className="content-29">
                       <div className="text-38">
-                        Know your code,
+                        Stop Writing Docs
                         <br />
-                        within minutes
+                        Start Automating Them
                       </div>
 
                       <p className="text-39">
