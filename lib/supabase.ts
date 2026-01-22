@@ -1,11 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing Supabase environment variables. Please check your .env file.');
-}
+const supabaseUrl = 'https://saunsibblswdulijmejy.supabase.co';
+const supabaseAnonKey = 'sb_publishable_vTEj6US2uUwf_FPCy8Z3Iw_LtQWvqw-';
 
 // Helper function for timestamped logging
 const log = (level: 'info' | 'error', message: string) => {
