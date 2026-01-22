@@ -5,22 +5,10 @@ export const NewTestimonialCard = ({
   name,
   title,
   company,
-  logo,
   avatar,
 }) => {
   return (
     <div className="new-testimonial-card">
-      {logo && (
-        <div className="new-testimonial-card-logo">
-          {logo}
-        </div>
-      )}
-      {!logo && (
-        <div className="new-testimonial-card-logo-placeholder">
-          <span>Logo</span>
-        </div>
-      )}
-      
       <div className="new-testimonial-card-quote">
         &ldquo;{quote}&rdquo;
       </div>

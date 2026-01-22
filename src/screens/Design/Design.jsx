@@ -597,41 +597,19 @@ export const Design = () => {
                 quote="I love the idea of all these systems being monitored, brought together, and getting a cohesive idea of what's going to happen…because this has been really difficult for us to get LLMs to [document] this well."
                 name="Sarah T"
                 title="COO"
-                company="VectorVector"
                 avatar="/img/avatar-1.png"
-                logo={
-                  <img
-                    src="https://cdn.simpleicons.org/asana/F06A6A"
-                    alt="Asana"
-                    style={{ height: "40px", width: "auto" }}
-                  />
-                }
               />
               <NewTestimonialCard
                 quote="I've paid for a lot of project management tools, but what caught my attention was that your product was generative documentation!"
                 name="David K"
                 title="Software Development Engineer"
                 avatar="/img/avatar-2.png"
-                logo={
-                  <img
-                    src="/img/image-588254642.png"
-                    alt="Zoom"
-                    style={{ height: "40px", width: "auto" }}
-                  />
-                }
               />
               <NewTestimonialCard
                 quote="We finally have documentation that stays current. When tickets and PRs change, ScopeDocs keeps the docs aligned with reality."
                 name="Alexa R."
                 title="VP of Engineering"
                 avatar="/img/avatar-3.png"
-                logo={
-                  <img
-                    src="/img/Google_Drive_logo.png"
-                    alt="Google Drive"
-                    style={{ height: "40px", width: "auto" }}
-                  />
-                }
               />
             </div>
           </div>
@@ -1314,28 +1292,13 @@ export const Design = () => {
                 quote="I love the idea of all these systems being monitored, brought together, and getting a cohesive idea of what's going to happen…because this has been really difficult for us to get LLMs to [document] this well."
                 name="Sarah T"
                 title="COO"
-                company="VectorVector"
                 avatar="/img/avatar-1.png"
-                logo={
-                  <img
-                    src="https://cdn.simpleicons.org/asana/F06A6A"
-                    alt="Asana"
-                    style={{ height: "40px", width: "auto" }}
-                  />
-                }
               />
               <NewTestimonialCard
                 quote="I've paid for a lot of project management tools, but what caught my attention was that your product was generative documentation!"
                 name="David K"
                 title="Software Development Engineer"
                 avatar="/img/avatar-2.png"
-                logo={
-                  <img
-                    src="/img/image-588254642.png"
-                    alt="Zoom"
-                    style={{ height: "40px", width: "auto" }}
-                  />
-                }
               />
               <NewTestimonialCard
                 quote="We finally have documentation that stays current. When tickets and PRs change, ScopeDocs keeps the docs aligned with reality."
@@ -1639,41 +1602,19 @@ export const Design = () => {
                 quote="I love the idea of all these systems being monitored, brought together, and getting a cohesive idea of what's going to happen…because this has been really difficult for us to get LLMs to [document] this well."
                 name="Sarah T"
                 title="COO"
-                company="VectorVector"
                 avatar="/img/avatar-1.png"
-                logo={
-                  <img
-                    src="https://cdn.simpleicons.org/asana/F06A6A"
-                    alt="Asana"
-                    style={{ height: "40px", width: "auto" }}
-                  />
-                }
               />
               <NewTestimonialCard
                 quote="I've paid for a lot of project management tools, but what caught my attention was that your product was generative documentation!"
                 name="David K"
                 title="Software Development Engineer"
                 avatar="/img/avatar-2.png"
-                logo={
-                  <img
-                    src="/img/image-588254642.png"
-                    alt="Zoom"
-                    style={{ height: "40px", width: "auto" }}
-                  />
-                }
               />
               <NewTestimonialCard
                 quote="We finally have documentation that stays current. When tickets and PRs change, ScopeDocs keeps the docs aligned with reality."
                 name="Alexa R."
                 title="VP of Engineering"
                 avatar="/img/avatar-3.png"
-                logo={
-                  <img
-                    src="/img/Google_Drive_logo.png"
-                    alt="Google Drive"
-                    style={{ height: "40px", width: "auto" }}
-                  />
-                }
               />
               </div>
             </div>

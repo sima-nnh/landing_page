@@ -21,69 +21,6 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-.new-testimonial-card-logo,
-.new-testimonial-card-logo-placeholder {
-  align-items: flex-start;
-  display: flex;
-  height: 40px;
-  justify-content: flex-start;
-  position: relative;
-  width: 100%;
-}
-
-.new-testimonial-card-logo img,
-.new-testimonial-card-logo svg {
-  height: 40px;
-  width: auto;
-  max-width: 100%;
-  display: block;
-}
-
-.new-testimonial-card-logo svg {
-  position: relative !important;
-  left: auto !important;
-  top: auto !important;
-  margin: 0 !important;
-  margin-left: 0 !important;
-  margin-right: auto !important;
-  align-self: flex-start !important;
-}
-
-/* Desktop view: Align logo with text content */
-@media (min-width: 1024px) {
-  .new-testimonial-card-logo {
-    padding-left: 0 !important;
-    margin-left: 0 !important;
-    padding-right: 0 !important;
-  }
-  
-  .new-testimonial-card-logo svg,
-  .new-testimonial-card-logo .notion-tool-icon {
-    margin-left: 0 !important;
-    margin-right: auto !important;
-    transform: none !important;
-    left: 0 !important;
-    position: relative !important;
-  }
-}
-
-.new-testimonial-card-logo-placeholder {
-  background-color: #1a1a1a;
-  border: 1px solid #3b3b3b3d;
-  border-radius: 8px;
-  justify-content: center;
-  width: 80px;
-}
-
-.new-testimonial-card-logo-placeholder span {
-  color: #b3b3b3;
-  font-family: "Figtree", Helvetica;
-  font-size: 12px;
-  font-weight: 400;
-  letter-spacing: 0;
-  line-height: 16px;
-}
-
 .new-testimonial-card-quote {
   align-self: stretch;
   color: #ffffff;
@@ -196,11 +133,6 @@
   .new-testimonial-card-title {
     font-size: clamp(12px, 3vw, 14px) !important;
     line-height: clamp(18px, 4vw, 20px) !important;
-  }
-  
-  .new-testimonial-card-logo,
-  .new-testimonial-card-logo-placeholder {
-    height: clamp(32px, 6vw, 40px) !important;
   }
   
   .new-testimonial-card-avatar {
