@@ -93,7 +93,7 @@ export const Navbar = ({
           text={buttonText}
           textClassName="button-instance"
           type="secondary"
-          href={buttonText === "Book Demo" ? "https://calendar.app.google/hdAMUpqTcD2uzbHx9" : undefined}
+          href={buttonText === "Book Demo" ? "https://calendar.google.com/appointments/schedules/AcZssZ1yqI_HhQODo1FeOZ4yBo2_fl9FnbYOLEaLdd_yM3t7vIht4BJSZm5S2mXQqEf8P3bey9TlQ7KD" : undefined}
         />
 
         {/* Hamburger button for mobile */}
@@ -149,7 +149,7 @@ export const Navbar = ({
               text={buttonText}
               textClassName="button-instance"
               type="secondary"
-              href={buttonText === "Book Demo" ? "https://calendar.app.google/hdAMUpqTcD2uzbHx9" : undefined}
+              href={buttonText === "Book Demo" ? "https://calendar.google.com/appointments/schedules/AcZssZ1yqI_HhQODo1FeOZ4yBo2_fl9FnbYOLEaLdd_yM3t7vIht4BJSZm5S2mXQqEf8P3bey9TlQ7KD" : undefined}
             />
           </div>
         </div>

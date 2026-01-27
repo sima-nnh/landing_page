@@ -1014,7 +1014,7 @@ export const Design = () => {
                     text="Book Demo"
                     textClassName="button-13"
                     type="secondary"
-                    href={screenWidth >= 1440 ? "https://calendar.app.google/hdAMUpqTcD2uzbHx9" : undefined}
+                    href={screenWidth >= 1440 ? "https://calendar.google.com/appointments/schedules/AcZssZ1yqI_HhQODo1FeOZ4yBo2_fl9FnbYOLEaLdd_yM3t7vIht4BJSZm5S2mXQqEf8P3bey9TlQ7KD" : undefined}
                   />
                 </div>
 
