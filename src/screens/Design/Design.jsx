@@ -355,7 +355,7 @@ export const Design = () => {
                       </div>
 
                       <p className="text-12">
-                        <span className="span">ScopeDocs is an AI documentation platform that turns your GitHub, Slack, and Jira activity into a single source of truth automatically</span>
+                        <span className="span">ScopeDocs is an AI documentation platform that turns your GitHub, Slack, and Linear activity into a single source of truth automatically</span>
                       </p>
                     </div>
 
@@ -535,13 +535,16 @@ export const Design = () => {
               <ToolCard
                 logo={
                   <img
-                    src="/img/microsfot_team_logo.png"
-                    alt="Microsoft Teams"
-                    style={{ height: "40px", width: "auto" }}
+                    src="/img/linear-light-logo.svg"
+                    alt="Linear"
+                    width="40"
+                    height="40"
+                    loading="lazy"
+                    style={{ height: "40px", width: "40px" }}
                   />
                 }
-                toolName="Microsoft Teams"
-                category="Collaboration Platform"
+                toolName="Linear"
+                category="Issue Tracking"
               />
             </div>
           </div>
@@ -1038,7 +1041,7 @@ export const Design = () => {
                       </div>
 
                       <p className="text-36">
-                        <span className="span">ScopeDocs is an AI documentation platform that turns your GitHub, Slack, and Jira activity into a single source of truth automatically</span>
+                        <span className="span">ScopeDocs is an AI documentation platform that turns your GitHub, Slack, and Linear activity into a single source of truth automatically</span>
                       </p>
                     </div>
                   </div>
@@ -1230,14 +1233,17 @@ export const Design = () => {
               <ToolCard
                 logo={
                   <img
-                    src="/img/microsfot_team_logo.png"
-                      alt="Microsoft Teams"
-                    style={{ height: "40px", width: "auto" }}
+                    src="/img/linear-light-logo.svg"
+                    alt="Linear"
+                    width="40"
+                    height="40"
+                    loading="lazy"
+                    style={{ height: "40px", width: "40px" }}
                   />
                 }
-                toolName="Microsoft Teams"
-                category="Collaboration Platform"
-                  />
+                toolName="Linear"
+                category="Issue Tracking"
+              />
                 </div>
               </div>
 
@@ -1354,7 +1360,7 @@ export const Design = () => {
                       </div>
 
                       <p className="text-39">
-                        <span className="span">ScopeDocs is an AI documentation platform that turns your GitHub, Slack, and Jira activity into a single source of truth automatically</span>
+                        <span className="span">ScopeDocs is an AI documentation platform that turns your GitHub, Slack, and Linear activity into a single source of truth automatically</span>
                       </p>
                     </div>
                   </div>
@@ -1540,14 +1546,17 @@ export const Design = () => {
               <ToolCard
                 logo={
                   <img
-                      src="/img/microsfot_team_logo.png"
-                    alt="Microsoft Teams"
-                    style={{ height: "40px", width: "auto" }}
+                    src="/img/linear-light-logo.svg"
+                    alt="Linear"
+                    width="40"
+                    height="40"
+                    loading="lazy"
+                    style={{ height: "40px", width: "40px" }}
                   />
                 }
-                toolName="Microsoft Teams"
-                category="Collaboration Platform"
-                    />
+                toolName="Linear"
+                category="Issue Tracking"
+              />
                   </div>
                 </div>
 
